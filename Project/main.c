@@ -4,6 +4,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <io.h>
+#include <time.h>
 
 typedef struct _finddata_t FILE_SEARCH;
 
@@ -32,7 +33,7 @@ int main(int argc, char * argv[])
 	FILE_SEARCH folderdata;
 	FILE *fin;
 	Filedata *fd;
-
+	clock_t a=clock();
 	long handle;
 	int result = 1;
 	int filelength, cnt = 0, fnamelength;
@@ -82,7 +83,7 @@ int main(int argc, char * argv[])
 	for (int i = 0; i < cnt; i++) {
 		printf("%d / ÆÄÀÏ¸í : %s \n", fd[i].rank, fd[i].Filename);
 	}
-
+	printf("%2.5lf", ((double)clock() - a) / CLOCKS_PER_SEC);
 		system("pause");
 		return 0;
 }
