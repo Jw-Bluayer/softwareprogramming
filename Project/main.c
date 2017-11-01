@@ -13,7 +13,18 @@ typedef struct __Filedata {
 }Filedata;
 
 int compare(void * first, void * second) {
-	return ((Filedata *)first) -> rank < ((Filedata *)second) -> rank;
+	/*if (((Filedata *)first)->rank < ((Filedata *)second)->rank)
+		return 1;
+	else if (((Filedata *)first)->rank > ((Filedata *)second)->rank)
+		return -1;
+	else
+		return 0; */
+	
+	if (((Filedata *)first)-> rank == ((Filedata *)second)-> rank) {
+		return (strcmp(((Filedata *)second)-> Filename, ((Filedata *)first)-> Filename));
+	}
+	
+	return (((Filedata *)first)->rank < ((Filedata *)second)->rank);
 }
 
 int main(int argc, char * argv[])
