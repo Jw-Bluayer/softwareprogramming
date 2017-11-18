@@ -14,18 +14,12 @@ typedef struct __Filedata {
 }Filedata;
 
 int compare(void * first, void * second) {
-	/*if (((Filedata *)first)->rank < ((Filedata *)second)->rank)
+	if (((Filedata *)first) -> rank < ((Filedata *)second)->rank)
 		return 1;
 	else if (((Filedata *)first)->rank > ((Filedata *)second)->rank)
 		return -1;
 	else
-		return 0; */
-	
-	if (((Filedata *)first)-> rank == ((Filedata *)second)-> rank) {
-		return (strcmp(((Filedata *)second)-> Filename, ((Filedata *)first)-> Filename));
-	}
-	
-	return (((Filedata *)first)->rank < ((Filedata *)second)->rank);
+		return 0; 
 }
 
 int main(int argc, char * argv[])
@@ -69,9 +63,24 @@ int main(int argc, char * argv[])
 		keywordplacepointer = filestr;
 		while (keywordplacepointer != 0) {
 			keywordplacepointer = strstr(keywordplacepointer, argv[1]);
-			if (keywordplacepointer != 0) {
-				fd[i].rank++;
-				keywordplacepointer = keywordplacepointer+strlen(argv[1]);
+			if (keywordplacepointer != 0) 
+			{
+				if (keywordplacepointer == filestr) 
+				{
+					fd[i].rank++;
+					keywordplacepointer = keywordplacepointer + strlen(argv[1]);
+				}
+				else 
+				{
+					if (*(keywordplacepointer + strlen(argv[1])) == ' ' && *(keywordplacepointer - sizeof(char)) == ' ') 
+					{
+						fd[i].rank++;
+						keywordplacepointer = keywordplacepointer + strlen(argv[1]);
+					}
+					else {
+						keywordplacepointer = keywordplacepointer + strlen(argv[1]);
+					}
+				}
 			}
 		}
 		fclose(fin);
@@ -79,11 +88,12 @@ int main(int argc, char * argv[])
 	_findclose(handle);
 
 	qsort(fd, cnt, sizeof(Filedata), compare);
-
+	char b[50000]="";
 	for (int i = 0; i < cnt; i++) {
-		printf("%d / 파일명 : %s \n", fd[i].rank, fd[i].Filename);
+		sprintf(b,"%s Rank : %d / 파일명 : %s \n",b, fd[i].rank, fd[i].Filename);
 	}
+	printf("%s", b);
 	printf("%2.5lf", ((double)clock() - a) / CLOCKS_PER_SEC);
-		system("pause");
-		return 0;
+	system("pause");
+	return 0;
 }
