@@ -31,7 +31,7 @@ int main(int argc, char * argv[])
 	clock_t a=clock();
 	long handle;
 	int result = 1;
-	int filelength, cnt = 0, fnamelength, filecnt =0;
+	int filelength, cnt = 0, fnamelength, filecnt = 0;
 	char * keywordplacepointer;
 	char * filestr;
 	char b[50000] = "";
@@ -101,14 +101,12 @@ int main(int argc, char * argv[])
 			filecnt++;
 		}
 	}
-	cnt -= filecnt; 
+	cnt -= filecnt;
 
 	for (int i = 0; i < cnt; i++) {
 		sprintf(b, "%s Rank : %d / ÆÄÀÏ¸í : %s \n", b, fd[i].rank, fd[i].Filename);
 	}
 	printf("%s", b);
-	printf("\nfilecnt : %d, cnt: %d \n\n", filecnt, cnt);
-
 	printf("%2.5lf", ((double)clock() - a) / CLOCKS_PER_SEC);
 	system("pause");
 	return 0;
