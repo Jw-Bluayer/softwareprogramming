@@ -65,6 +65,7 @@ int main(int argc, char * argv[])
 		filestr = (char*)malloc((filelength+1) * sizeof(char));
 		fread(filestr, 1, filelength, fin);
 		filestr[filelength] = '\0';
+		argv[1] = strlwr(argv[1]);
 		filestr = strlwr(filestr);
 		keywordplacepointer = filestr;
 		while (keywordplacepointer != 0) {
