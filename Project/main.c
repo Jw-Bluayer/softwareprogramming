@@ -32,6 +32,7 @@ int main(int argc, char * argv[])
 	long handle;
 	int result = 1;
 	int filelength, cnt = 0, fnamelength, filecnt = 0;
+	int j = 0;
 	char * keywordplacepointer;
 	char * filestr;
 	char b[50000] = "";
@@ -79,11 +80,38 @@ int main(int argc, char * argv[])
 				}
 				else 
 				{
+					
 					if (*(keywordplacepointer + strlen(argv[1])) == ' ' && *(keywordplacepointer - sizeof(char)) == ' ') 
 					{
 						fd[i].rank++;
 						keywordplacepointer = keywordplacepointer + strlen(argv[1]);
 					}
+					
+					else if (*(keywordplacepointer + strlen(argv[1])) == '.' && *(keywordplacepointer - sizeof(char)) == ' ') {
+						fd[i].rank++;
+						keywordplacepointer = keywordplacepointer + strlen(argv[1]);
+					}
+					
+					else if (*(keywordplacepointer + strlen(argv[1])) == '!' && *(keywordplacepointer - sizeof(char)) == ' ') {
+						fd[i].rank++;
+						keywordplacepointer = keywordplacepointer + strlen(argv[1]);
+					}
+
+					else if (*(keywordplacepointer + strlen(argv[1])) == '?' && *(keywordplacepointer - sizeof(char)) == ' ') {
+						fd[i].rank++;
+						keywordplacepointer = keywordplacepointer + strlen(argv[1]);
+					}
+
+					else if (*(keywordplacepointer + strlen(argv[1])) == ',' && *(keywordplacepointer - sizeof(char)) == ' ') {
+						fd[i].rank++;
+						keywordplacepointer = keywordplacepointer + strlen(argv[1]);
+					}
+					
+					else if (*(keywordplacepointer + strlen(argv[1])) == ' ' && *(keywordplacepointer - sizeof(char)) == 34) {
+						fd[i].rank++;
+						keywordplacepointer = keywordplacepointer + strlen(argv[1]);
+					}
+					
 					else {
 						keywordplacepointer = keywordplacepointer + strlen(argv[1]);
 					}
@@ -109,6 +137,5 @@ int main(int argc, char * argv[])
 	}
 	printf("%s", b);
 	printf("%2.5lf", ((double)clock() - a) / CLOCKS_PER_SEC);
-	system("pause");
 	return 0;
 }

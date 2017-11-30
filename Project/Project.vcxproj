@@ -114,11 +114,7 @@
     <ClCompile Include="main.c" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="dataset\10193newsML.txt" />
-    <Text Include="dataset\10264newsML.txt" />
-    <Text Include="dataset\10306newsML.txt" />
-    <Text Include="dataset\10650newsML.txt" />
-    <Text Include="dataset\2537newsML.txt" />
+    <Text Include="a.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
