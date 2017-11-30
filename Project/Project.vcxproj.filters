@@ -20,7 +20,19 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="a.txt">
+    <Text Include="dataset\2537newsML.txt">
+      <Filter>리소스 파일</Filter>
+    </Text>
+    <Text Include="dataset\10193newsML.txt">
+      <Filter>리소스 파일</Filter>
+    </Text>
+    <Text Include="dataset\10264newsML.txt">
+      <Filter>리소스 파일</Filter>
+    </Text>
+    <Text Include="dataset\10306newsML.txt">
+      <Filter>리소스 파일</Filter>
+    </Text>
+    <Text Include="dataset\10650newsML.txt">
       <Filter>리소스 파일</Filter>
     </Text>
   </ItemGroup>
