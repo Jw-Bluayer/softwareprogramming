@@ -80,7 +80,6 @@ int main(int argc, char * argv[])
 				}
 				else 
 				{
-					
 					if (*(keywordplacepointer + strlen(argv[1])) == ' ' && *(keywordplacepointer - sizeof(char)) == ' ') 
 					{
 						fd[i].rank++;
@@ -112,6 +111,52 @@ int main(int argc, char * argv[])
 						keywordplacepointer = keywordplacepointer + strlen(argv[1]);
 					}
 					
+					else if (*(keywordplacepointer + strlen(argv[1])) == 34 && *(keywordplacepointer - sizeof(char)) == 34) {
+						fd[i].rank++;
+						keywordplacepointer = keywordplacepointer + strlen(argv[1]);
+					}// 큰따옴표
+					
+					else if (*(keywordplacepointer + strlen(argv[1])) == 39 && *(keywordplacepointer - sizeof(char)) == 39) {
+						fd[i].rank++;
+						keywordplacepointer = keywordplacepointer + strlen(argv[1]);
+					} // 작은 따옴표
+
+					else if (*(keywordplacepointer + strlen(argv[1])) == 39 && *(keywordplacepointer - sizeof(char)) == ' ') {
+						fd[i].rank++;
+						keywordplacepointer = keywordplacepointer + strlen(argv[1]);
+					}
+
+					else if (*(keywordplacepointer + strlen(argv[1])) == ' ' && *(keywordplacepointer - sizeof(char)) == 39) {
+						fd[i].rank++;
+						keywordplacepointer = keywordplacepointer + strlen(argv[1]);
+					}
+
+					else if (*(keywordplacepointer + strlen(argv[1])) == 41 && *(keywordplacepointer - sizeof(char)) == 40) {
+						fd[i].rank++;
+						keywordplacepointer = keywordplacepointer + strlen(argv[1]);
+					} //소괄호
+
+					else if (*(keywordplacepointer + strlen(argv[1])) == 41 && *(keywordplacepointer - sizeof(char)) == ' ') {
+						fd[i].rank++;
+						keywordplacepointer = keywordplacepointer + strlen(argv[1]);
+					}
+
+					else if (*(keywordplacepointer + strlen(argv[1])) == ' ' && *(keywordplacepointer - sizeof(char)) == 40) {
+						fd[i].rank++;
+						keywordplacepointer = keywordplacepointer + strlen(argv[1]);
+					}
+
+					else if (*(keywordplacepointer + strlen(argv[1])) == ' ' && *(keywordplacepointer - sizeof(char)) == '\n') {
+						fd[i].rank++;
+						keywordplacepointer = keywordplacepointer + strlen(argv[1]);
+					} // enter
+
+					else if (*(keywordplacepointer + strlen(argv[1])) == 39 && *(keywordplacepointer - sizeof(char)) == '\n') {
+						fd[i].rank++;
+						keywordplacepointer = keywordplacepointer + strlen(argv[1]);
+					} // enter + 어퍼스트로피
+					
+
 					else {
 						keywordplacepointer = keywordplacepointer + strlen(argv[1]);
 					}
