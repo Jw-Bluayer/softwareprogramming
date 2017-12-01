@@ -156,6 +156,10 @@ int main(int argc, char * argv[])
 						keywordplacepointer = keywordplacepointer + strlen(argv[1]);
 					} // enter + 어퍼스트로피
 					
+					else if (*(keywordplacepointer + strlen(argv[1])) == ' ' && *(keywordplacepointer - sizeof(char)) == '\n') {
+						fd[i].rank++;
+						keywordplacepointer = keywordplacepointer + strlen(argv[1]);
+					} // enter 이후 첫 문단
 
 					else {
 						keywordplacepointer = keywordplacepointer + strlen(argv[1]);
@@ -175,10 +179,16 @@ int main(int argc, char * argv[])
 			filecnt++;
 		}
 	}
+	
 	cnt -= filecnt;
 
-	for (int i = 0; i < cnt; i++) {
-		sprintf(b, "%s Rank : %d / 파일명 : %s \n", b, fd[i].rank, fd[i].Filename);
+	if (cnt == 0) {
+		printf("키워드가 들어 간 파일이 없습니다!");
+	}
+	else {
+		for (int i = 0; i < cnt; i++) {
+			sprintf(b, "%s Rank : %d / 파일명 : %s \n", b, fd[i].rank, fd[i].Filename);
+		}
 	}
 	printf("%s", b);
 	printf("%2.5lf", ((double)clock() - a) / CLOCKS_PER_SEC);
