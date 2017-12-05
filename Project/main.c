@@ -6,13 +6,20 @@
 #include <stdlib.h>
 #include <io.h>
 #include <time.h>
+#include <math.h>
+
+double logB(double x, double base);
 
 typedef struct _finddata_t FILE_SEARCH;
 
 typedef struct __Filedata {
-	int rank;
+	double rank;
 	char * Filename;
 }Filedata;
+
+double logB(double x, double base) {
+	return log(x) / log(base);
+}
 
 char * plural(char word[]) {
 	int length;
@@ -58,9 +65,10 @@ int main(int argc, char * argv[])
 	FILE *fin;
 	Filedata *fd;
 	clock_t a=clock();
+	int maxft;
 	long handle;
 	int result = 1;
-	int filelength, cnt = 0, fnamelength, filecnt = 0;
+	int filelength, cnt = 0, dfcnt = 0, fnamelength, filecnt = 0;
 	int j = 0;
 	char * keywordplacepointer, *pkeywordplacepointer;
 	char * filestr, * pluralargv = plural(argv[1]);
@@ -159,15 +167,29 @@ int main(int argc, char * argv[])
 			filecnt++;
 		}
 	}
+
+	maxft = fd[0].rank;
+
+	for (int i = 0; i < cnt; i++) {
+		fd[i].rank = 0.5 + 0.5 * (fd[i].rank / maxft);
+	} // tf (증가  빈도)  증가 빈도는 문서 길이에 따라 단어의 상대적 빈도 값을 조정해주는 방법입니다. 
+	// 이 방식을 이용하면 스케일이 최대 1로 고정되는 효과가 나타납니다.
+
+	dfcnt = cnt;
 	
 	cnt -= filecnt;
+
+	for (int i = 0; i < cnt; i++) {
+		fd[i].rank = fd[i].rank * log10(dfcnt / cnt);
+	} //idf
+
 
 	if (cnt == 0) {
 		printf("키워드가 들어 간 파일이 없습니다!");
 	}
 	else {
 		for (int i = 0; i < cnt; i++) {
-			sprintf(b, "%s Rank : %d / 파일명 : %s \n", b, fd[i].rank, fd[i].Filename);
+			sprintf(b, "%s Rank : %2.5lf / 파일명 : %s \n", b, fd[i].rank, fd[i].Filename);
 		}
 	}
 	printf("%s", b);
