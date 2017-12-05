@@ -14,6 +14,35 @@ typedef struct __Filedata {
 	char * Filename;
 }Filedata;
 
+char * plural(char word[]) {
+	int length;
+	char * str;
+	length = strlen(word);
+
+	if ((length > 1 && word[length - 2] != 'a' && word[length - 2] != 'e' && word[length - 2] != 'i' && word[length - 2] != 'o'
+		&& word[length - 2] != 'u' && word[length - 1] == 'y') ) {
+		str = (char*)malloc(length + 3);
+		strcpy(str, word);
+		strcpy(str + length - 1, "ies");
+	}
+
+	else if (word[length - 1] == 's' || word[length - 1] == 'x' || word[length - 1] == 'z' || (length > 1 && word[length - 2] == 'c' && word[length - 1] == 'h') 
+		|| (length > 1 && word[length - 2] == 's' && word[length - 1] == 'h')) {
+		str = (char*)malloc(length + 3);
+		strcpy(str, word);
+		strcat(str, "es");
+	}
+
+	else {
+		str = (char*)malloc(length + 2);
+		strcpy(str, word);
+		strcat(str, "s");
+	}
+	
+	return str;
+
+}
+
 int compare(void * first, void * second) 
 {
 	if (((Filedata*)first)->rank == ((Filedata*)second)->rank) {
@@ -33,8 +62,8 @@ int main(int argc, char * argv[])
 	int result = 1;
 	int filelength, cnt = 0, fnamelength, filecnt = 0;
 	int j = 0;
-	char * keywordplacepointer;
-	char * filestr;
+	char * keywordplacepointer, *pkeywordplacepointer;
+	char * filestr, * pluralargv = plural(argv[1]);
 	char b[50000] = "";
 
 	handle = _findfirst("./*.txt", &folderdata);
@@ -68,7 +97,33 @@ int main(int argc, char * argv[])
 		filestr[filelength] = '\0';
 		argv[1] = strlwr(argv[1]);
 		filestr = strlwr(filestr);
+		pluralargv = strlwr(pluralargv);
 		keywordplacepointer = filestr;
+		pkeywordplacepointer = filestr;
+		while (pkeywordplacepointer != 0) {
+			pkeywordplacepointer = strstr(pkeywordplacepointer, pluralargv);
+			if (pkeywordplacepointer != 0)
+			{
+				if (pkeywordplacepointer == filestr)
+				{
+					fd[i].rank++;
+					pkeywordplacepointer = pkeywordplacepointer + strlen(pluralargv);
+				}
+				else
+				{
+					if (isalpha(*(pkeywordplacepointer + strlen(pluralargv))) == 0 && isalpha(*(pkeywordplacepointer - sizeof(char))) == 0)
+					{
+						fd[i].rank++;
+						pkeywordplacepointer = pkeywordplacepointer + strlen(pluralargv);
+					}
+
+					else {
+						pkeywordplacepointer = pkeywordplacepointer + strlen(pluralargv);
+					}
+				}
+			}
+		}
+
 		while (keywordplacepointer != 0) {
 			keywordplacepointer = strstr(keywordplacepointer, argv[1]);
 			if (keywordplacepointer != 0) 
@@ -96,7 +151,7 @@ int main(int argc, char * argv[])
 		result = _findnext(handle, &folderdata);
 	}
 	_findclose(handle);
-
+	
 	qsort(fd, cnt, sizeof(Filedata), compare);
 
 	for (int i = 0; i < cnt; i++) {
